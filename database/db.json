@@ -1,0 +1,316 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Amanda",
+      "lastName": "Correia",
+      "role": "Gerente"
+    },
+    {
+      "id": 2,
+      "name": "Rafael",
+      "lastName": "Alves",
+      "role": "Contador"
+    },
+    {
+      "id": 3,
+      "name": "Kauan",
+      "lastName": "Martins",
+      "role": "Gerente"
+    },
+    {
+      "id": 4,
+      "name": "Mateus",
+      "lastName": "Carvalho",
+      "role": "Contador"
+    },
+    {
+      "id": 5,
+      "name": "Joao",
+      "lastName": "Ferreira",
+      "role": "Gerente"
+    }
+  ],
+  "chains": [
+    {
+      "id": 1,
+      "name": "Atacadão dia a dia",
+      "identification": "36.810.420",
+      "userId": 1
+    },
+    {
+      "id": 1,
+      "name": "Atacadão dia a dia",
+      "identification": "36.810.420",
+      "userId": 2
+    },
+    {
+      "id": 1,
+      "name": "Atacadão dia a dia",
+      "identification": "36.810.420",
+      "userId": 3
+    },
+    {
+      "id": 2,
+      "name": "Carrefour",
+      "identification": "50.363.854",
+      "userId": 3
+    },
+    {
+      "id": 2,
+      "name": "Carrefour",
+      "identification": "50.363.854",
+      "userId": 4
+    },
+    {
+      "id": 2,
+      "name": "Carrefour",
+      "identification": "50.363.854",
+      "userId": 5
+    },
+    {
+      "id": 3,
+      "name": "Carrefour",
+      "identification": "50.363.854",
+      "userId": 3
+    },
+    {
+      "id": 4,
+      "name": "Mercado do Ze",
+      "identification": "50.131.812",
+      "userId": 4
+    },
+    {
+      "id": 4,
+      "name": "Mercado do Ze",
+      "identification": "50.131.812",
+      "userId": 2
+    },
+    {
+      "id": 4,
+      "name": "Mercado do Ze",
+      "identification": "50.131.812",
+      "userId": 1
+    }
+  ],
+  "stores": [
+    {
+      "id": 1,
+      "name": "Loja 1",
+      "city": "Rio de Janeiro",
+      "chainId": 1
+    },
+    {
+      "id": 2,
+      "name": "Loja 2",
+      "city": "Rio de Janeiro",
+      "chainId": 1
+    },
+    {
+      "id": 3,
+      "name": "Loja 3",
+      "city": "Campinas",
+      "chainId": 1
+    },
+    {
+      "id": 4,
+      "name": "Loja 1",
+      "city": "Manaus",
+      "chainId": 2
+    },
+    {
+      "id": 5,
+      "name": "Loja 2",
+      "city": "Recife",
+      "chainId": 2
+    },
+    {
+      "id": 6,
+      "name": "Loja 1",
+      "city": "Porto Alegre",
+      "chainId": 3
+    },
+    {
+      "id": 7,
+      "name": "Loja 2",
+      "city": "Rio de Janeiro",
+      "chainId": 3
+    },
+    {
+      "id": 8,
+      "name": "Loja 3",
+      "city": "Campinas",
+      "chainId": 3
+    },
+    {
+      "id": 9,
+      "name": "Loja 1",
+      "city": "Campinas",
+      "chainId": 4
+    },
+    {
+      "id": 10,
+      "name": "Loja 2",
+      "city": "Rio de Janeiro",
+      "chainId": 4
+    },
+    {
+      "id": 11,
+      "name": "Loja 3",
+      "city": "Manaus",
+      "chainId": 4
+    },
+    {
+      "id": 12,
+      "name": "Loja 4",
+      "city": "Campinas",
+      "chainId": 4
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Brahma Duplo Malte",
+      "price": 5.55,
+      "storeId": 1
+    },
+    {
+      "id": 2,
+      "name": "Brahma Duplo Malte",
+      "price": 6,
+      "storeId": 2
+    },
+    {
+      "id": 3,
+      "name": "Brahma Duplo Malte",
+      "price": 4.25,
+      "storeId": 3
+    },
+    {
+      "id": 4,
+      "name": "Brahma Duplo Malte",
+      "price": 3.99,
+      "storeId": 4
+    },
+    {
+      "id": 5,
+      "name": "Brahma Duplo Malte",
+      "price": 6.45,
+      "storeId": 5
+    },
+    {
+      "id": 5,
+      "name": "Skol Beats",
+      "price": 3.4,
+      "storeId": 6
+    },
+    {
+      "id": 6,
+      "name": "Skol Beats",
+      "price": 5.99,
+      "storeId": 7
+    },
+    {
+      "id": 7,
+      "name": "Skol Beats",
+      "price": 9.7,
+      "storeId": 8
+    },
+    {
+      "id": 8,
+      "name": "Skol Beats",
+      "price": 8,
+      "storeId": 9
+    },
+    {
+      "id": 9,
+      "name": "Skol Beats Lata",
+      "price": 3.99,
+      "storeId": 10
+    },
+    {
+      "id": 10,
+      "name": "Skol Beats Lata",
+      "price": 2.3,
+      "storeId": 11
+    },
+    {
+      "id": 11,
+      "name": "Skol Beats Lata",
+      "price": 3.5,
+      "storeId": 12
+    },
+    {
+      "id": 12,
+      "name": "Brahma Duplo Malte",
+      "price": 5.55,
+      "storeId": 12
+    },
+    {
+      "id": 13,
+      "name": "Brahma Duplo Malte",
+      "price": 6,
+      "storeId": 11
+    },
+    {
+      "id": 14,
+      "name": "Brahma Duplo Malte",
+      "price": 4.25,
+      "storeId": 10
+    },
+    {
+      "id": 15,
+      "name": "Brahma Duplo Malte",
+      "price": 3.99,
+      "storeId": 9
+    },
+    {
+      "id": 16,
+      "name": "Brahma Duplo Malte",
+      "price": 6.45,
+      "storeId": 4
+    },
+    {
+      "id": 17,
+      "name": "Skol Beats",
+      "price": 3.4,
+      "storeId": 3
+    },
+    {
+      "id": 18,
+      "name": "Skol Beats",
+      "price": 5.99,
+      "storeId": 2
+    },
+    {
+      "id": 19,
+      "name": "Skol Beats",
+      "price": 9.7,
+      "storeId": 1
+    },
+    {
+      "id": 20,
+      "name": "Skol Beats",
+      "price": 8,
+      "storeId": 10
+    },
+    {
+      "id": 21,
+      "name": "Skol Beats Lata",
+      "price": 3.99,
+      "storeId": 11
+    },
+    {
+      "id": 22,
+      "name": "Skol Beats Lata",
+      "price": 2.3,
+      "storeId": 12
+    },
+    {
+      "id": 23,
+      "name": "Skol Beats Lata",
+      "price": 3.5,
+      "storeId": 1
+    }
+  ]
+}
