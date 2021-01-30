@@ -1,71 +1,87 @@
 import {
-  atom, atomFamily, selector, selectorFamily,
+  atomFamily, selector, selectorFamily,
 } from 'recoil';
-import { Chain } from '../types';
-import { getChainsByUser } from '../config/api';
+import { Store } from '../types';
+import { getStoresByChain } from '../config/api';
+import { currentChainId, hasCurrentChain } from './chains';
 import { currentUserId } from './users';
 
-const chainsQuery = selectorFamily<Array<Chain>, number>({
-  key: 'chainsQuery',
-  get: (userId) => async () => {
-    const { data } = await getChainsByUser(userId);
+const storesQuery = selectorFamily<Array<Store>, number>({
+  key: 'storesQuery',
+  get: (chainId) => async () => {
+    const { data } = await getStoresByChain(chainId);
     return data;
   },
 });
 
-export const chainsAtom = atomFamily<Array<Chain>, number>({
-  key: 'chainsAtom',
-  default: chainsQuery,
+export const storesAtom = atomFamily<Array<Store>, number>({
+  key: 'storesAtom',
+  default: storesQuery,
 });
 
-export const chainsState = selector<Array<Chain>>({
-  key: 'chainsState',
+export const storesState = selector<Array<Store>>({
+  key: 'storesState',
   get: ({ get }) => {
-    const userId = get(currentUserId);
-    if (!userId) return [];
-    return get(chainsAtom(userId));
+    const chainId = get(currentChainId);
+    if (!chainId) return [];
+    return get(storesAtom(chainId));
   },
   set: ({ set, get }, newValue) => {
-    const userId = get(currentUserId);
-    if (!userId) throw new Error('User id is missing');
-    set(chainsAtom(userId), newValue);
+    const chainId = get(currentChainId);
+    if (!chainId) throw new Error('Chain id is missing');
+    set(storesAtom(chainId), newValue);
   },
 });
 
-export const currentChain = atomFamily<Chain | null, number>({
-  key: 'currentChain',
+interface CurrentStoreProps {
+  chainId: number,
+  userId: number,
+}
+
+const currentStore = atomFamily<Store | null, Readonly<CurrentStoreProps>>({
+  key: 'currentStore',
   default: null,
 });
 
-export const currentChainState = selector<Chain | null>({
-  key: 'currentChainState',
+export const currentStoreState = selector<Store | null>({
+  key: 'currentStoreState',
   get: ({ get }) => {
+    const chainId = get(currentChainId);
+    if (!chainId) throw new Error('Chain id is missing');
+
     const userId = get(currentUserId);
     if (!userId) throw new Error('User id is missing');
 
-    return get(currentChain(userId));
+    return get(currentStore({ chainId, userId }));
   },
   set: ({ set, get }, newValue) => {
+    const chainId = get(currentChainId);
+    if (!chainId) throw new Error('Chain id is missing');
+
     const userId = get(currentUserId);
     if (!userId) throw new Error('User id is missing');
 
-    return set(currentChain(userId), newValue);
+    return set(currentStore({ chainId, userId }), newValue);
   },
 });
 
-export const currentChainId = selector<number | null>({
-  key: 'currentChainId',
+export const currentStoreId = selector<number | null>({
+  key: 'currentStoreId',
   get: ({ get }) => {
-    const userId = get(currentUserId);
-    if (!userId) throw new Error('User id is missing');
+    const chainId = get(currentChainId);
+    if (!chainId) throw new Error('Chain id is missing');
 
-    const chain = get(currentChain(userId));
+    const chain = get(currentStoreState);
     if (!chain) return null;
     return chain.id;
   },
 });
 
-// export const hasCurrentChain = selector<boolean>({
-//   key: 'hasCurrentChain',
-//   get: ({ get }) => !!get(currentChain),
-// });
+export const hasCurrentStore = selector<boolean>({
+  key: 'hasCurrentStore',
+  get: ({ get }) => {
+    const hasChain = get(hasCurrentChain);
+    if (!hasChain) return false;
+    return !!get(currentStoreState);
+  },
+});

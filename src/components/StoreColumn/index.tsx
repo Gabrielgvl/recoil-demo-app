@@ -2,22 +2,22 @@ import React, { FunctionComponent } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Typography } from '@material-ui/core';
 import CardList from '../CardList';
-import { chainsState, currentChainId, currentChainState } from '../../recoil/chains';
 import CustomCard from '../CustomCard';
+import { currentStoreId, currentStoreState, storesState } from '../../recoil/stores';
 
-const ChainColumn: FunctionComponent = () => {
-  const chainId = useRecoilValue(currentChainId);
-  const setChain = useSetRecoilState(currentChainState);
+const StoreColumn: FunctionComponent = () => {
+  const storeId = useRecoilValue(currentStoreId);
+  const setStore = useSetRecoilState(currentStoreState);
   return (
-    <CardList title="Redes" recoilSelector={chainsState}>
-      {(chain) => (
-        <CustomCard selected={chainId === chain.id} onClick={() => setChain(chain)}>
-          <Typography variant="h6">{`${chain.name}`}</Typography>
-          <Typography>{chain.identification}</Typography>
+    <CardList title="Lojas" recoilSelector={storesState}>
+      {(store) => (
+        <CustomCard selected={storeId === store.id} onClick={() => setStore(store)}>
+          <Typography variant="h6">{`${store.name}`}</Typography>
+          <Typography>{store.city}</Typography>
         </CustomCard>
       )}
     </CardList>
   );
 };
 
-export default React.memo(ChainColumn);
+export default React.memo(StoreColumn);

@@ -1,26 +1,46 @@
 import React from 'react';
-import logo from './logo.svg';
+import {
+  Container, Divider, Grid, Typography,
+} from '@material-ui/core';
 import './App.css';
+import UserColumn from './components/UserColumn';
+import ChainColumn from './components/ChainColumn';
+import Column from './components/Column';
+import { hasCurrentUser } from './recoil/users';
+import StoreColumn from './components/StoreColumn';
+import { hasCurrentChain } from './recoil/chains';
+import ProductColumn from './components/ProductColumn';
+import { hasCurrentStore } from './recoil/stores';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: React.FC = () => (
+  <Container maxWidth="xl">
+    <Grid justify="center" container spacing={3}>
+      <Grid xs={12} item>
+        <Typography align="center" variant="h2">Recoil Demo</Typography>
+        <Divider />
+      </Grid>
+      <Grid item container justify="space-evenly" spacing={6}>
+        <Grid item xs={3}>
+          <UserColumn />
+        </Grid>
+        <Grid item xs={3}>
+          <Column shouldRenderSelector={hasCurrentUser}>
+            <ChainColumn />
+          </Column>
+        </Grid>
+        <Grid item xs={3}>
+          <Column shouldRenderSelector={hasCurrentChain}>
+            <StoreColumn />
+          </Column>
+        </Grid>
+        <Grid item xs={3}>
+          <Column shouldRenderSelector={hasCurrentStore}>
+            <ProductColumn />
+          </Column>
+        </Grid>
+      </Grid>
+    </Grid>
+  </Container>
+);
 
 export default App;

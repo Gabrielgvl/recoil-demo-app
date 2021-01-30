@@ -1,6 +1,7 @@
 import { Grid, Typography } from '@material-ui/core';
 import React, { ReactElement, ReactNode, Suspense } from 'react';
 import { RecoilValue, useRecoilValue } from 'recoil';
+import LoadingList from '../LoadingList';
 
 interface ListContainerProps<T extends {id: number}> {
     recoilSelector: RecoilValue<Array<T>>
@@ -27,7 +28,7 @@ export interface CardColumnProps<T extends {id: number}> extends ListContainerPr
     title: string,
 }
 
-function CardColumn<T extends {id: number}>({
+function CardList<T extends {id: number}>({
   title,
   recoilSelector,
   children,
@@ -38,7 +39,7 @@ function CardColumn<T extends {id: number}>({
         <Typography align="center" variant="h5">{title}</Typography>
       </Grid>
       <Grid xs={12} container item spacing={3}>
-        <Suspense fallback="loading">
+        <Suspense fallback={<LoadingList />}>
           <ListContainer recoilSelector={recoilSelector}>
             {(item) => children(item)}
           </ListContainer>
@@ -48,4 +49,4 @@ function CardColumn<T extends {id: number}>({
   );
 }
 
-export default CardColumn;
+export default CardList;

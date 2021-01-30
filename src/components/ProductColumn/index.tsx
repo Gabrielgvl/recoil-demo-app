@@ -1,23 +1,46 @@
-import React, { FunctionComponent } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import React, { FunctionComponent, useCallback, useState } from 'react';
 import { Typography } from '@material-ui/core';
 import CardList from '../CardList';
 import CustomCard from '../CustomCard';
-import { currentStoreId, currentStoreState, storesState } from '../../recoil/stores';
+import { productsState } from '../../recoil/products';
+import { formatMoney } from '../utils';
+import { Product } from '../../types';
+import ProductModal from '../ProductModal';
 
-const StoreColumn: FunctionComponent = () => {
-  const storeId = useRecoilValue(currentStoreId);
-  const setStore = useSetRecoilState(currentStoreState);
+const ProductColumn: FunctionComponent = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [currentProduct, setProduct] = useState<Product>();
+
+  const handleOpen = useCallback((product: Product) => {
+    setProduct(product);
+    setModalOpen(true);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setProduct(undefined);
+    setModalOpen(false);
+  }, []);
+
   return (
-    <CardList title="Lojas" recoilSelector={storesState}>
-      {(store) => (
-        <CustomCard selected={storeId === store.id} onClick={() => setStore(store)}>
-          <Typography variant="h6">{`${store.name}`}</Typography>
-          <Typography>{store.city}</Typography>
-        </CustomCard>
+    <>
+      <CardList title="Produtos" recoilSelector={productsState}>
+        {(product) => (
+          <CustomCard onClick={() => handleOpen(product)}>
+            <Typography variant="h6">{`${product.name}`}</Typography>
+            <Typography>{formatMoney(product.price)}</Typography>
+          </CustomCard>
+        )}
+      </CardList>
+      {currentProduct && (
+      <ProductModal
+        product={currentProduct}
+        setProduct={setProduct}
+        open={isModalOpen}
+        onClose={handleClose}
+      />
       )}
-    </CardList>
+    </>
   );
 };
 
-export default React.memo(StoreColumn);
+export default React.memo(ProductColumn);

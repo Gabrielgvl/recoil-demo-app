@@ -1,23 +1,23 @@
-import { Typography } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { User } from '../../types';
+import { Typography } from '@material-ui/core';
+import { currentUser, currentUserId, usersAtom } from '../../recoil/users';
+import CardList from '../CardList';
 import CustomCard from '../CustomCard';
-import { currentUser, currentUserId } from '../../recoil/users';
 
-export interface UserCardProps {
-    user: User,
-}
-
-const UserCard: FunctionComponent<UserCardProps> = ({ user }) => {
+const UserColumn: FunctionComponent = () => {
   const userId = useRecoilValue(currentUserId);
   const setUser = useSetRecoilState(currentUser);
   return (
-    <CustomCard isSelected={userId === user.id} onClick={() => setUser(user)}>
-      <Typography variant="h6">{`${user.name} ${user.lastName}`}</Typography>
-      <Typography>{user.role}</Typography>
-    </CustomCard>
+    <CardList title="Usuarios" recoilSelector={usersAtom}>
+      {(user) => (
+        <CustomCard selected={userId === user.id} onClick={() => setUser(user)}>
+          <Typography variant="h6">{`${user.name} ${user.lastName}`}</Typography>
+          <Typography>{user.role}</Typography>
+        </CustomCard>
+      )}
+    </CardList>
   );
 };
 
-export default React.memo(UserCard);
+export default UserColumn;
