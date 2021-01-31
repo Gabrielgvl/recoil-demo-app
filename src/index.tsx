@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { RecoilRoot } from 'recoil';
-import { StylesProvider } from '@material-ui/core';
+import { StylesProvider, Typography } from '@material-ui/core';
+import { ErrorBoundary } from 'react-error-boundary';
 import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <StylesProvider injectFirst>
-        <App />
-      </StylesProvider>
+      <ErrorBoundary fallback={<Typography align="center" variant="h3">Aconteceu um erro! Lembre-se de rodar yarn start:db antes!</Typography>}>
+        <StylesProvider injectFirst>
+          <App />
+        </StylesProvider>
+      </ErrorBoundary>
     </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root'),
