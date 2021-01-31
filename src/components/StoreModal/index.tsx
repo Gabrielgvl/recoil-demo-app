@@ -1,30 +1,30 @@
 import { FC } from 'react';
 import { TextField } from '@material-ui/core';
-import { Product } from '../../types';
+import { Store } from '../../types';
 import CustomModal from '../CustomModal';
 
-export interface ProductModalProps {
-    product: Product,
+export interface StoreModalProps {
+    store: Store,
     open: boolean,
     onClose: () => void,
-    handleSubmit: (values: Product) => void
+    handleSubmit: (values: Store) => void
 }
 
-const ProductModal: FC<ProductModalProps> = ({
-  open, onClose, product, handleSubmit,
+const StoreModal: FC<StoreModalProps> = ({
+  open, onClose, store, handleSubmit,
 }) => (
   <CustomModal
-    initialValues={product}
+    initialValues={store}
     onClose={onClose}
     onSubmit={handleSubmit}
     open={open}
-    title={product.name}
+    title={store.name}
   >
     {({ handleChange, values }) => (
       <>
         <TextField
           fullWidth
-          label="Nome do Produto"
+          label="Nome"
           value={values.name}
           name="name"
           variant="outlined"
@@ -33,9 +33,9 @@ const ProductModal: FC<ProductModalProps> = ({
         />
         <TextField
           fullWidth
-          label="Preço do Produto"
-          value={values.price}
-          name="price"
+          label="Cargo"
+          value={values.city}
+          name="city"
           variant="outlined"
           onChange={handleChange}
           margin="normal"
@@ -45,4 +45,4 @@ const ProductModal: FC<ProductModalProps> = ({
   </CustomModal>
 );
 
-export default ProductModal;
+export default StoreModal;

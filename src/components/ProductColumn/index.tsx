@@ -1,31 +1,22 @@
-import React, { FunctionComponent, useCallback, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Typography } from '@material-ui/core';
 import CardList from '../CardList';
 import CustomCard from '../CustomCard';
 import { productsState } from '../../recoil/products';
 import { formatMoney } from '../utils';
-import { Product } from '../../types';
 import ProductModal from '../ProductModal';
+import useModalHelper from '../../hooks/useModalHelper';
 
 const ProductColumn: FunctionComponent = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [currentProduct, setProduct] = useState<Product>();
-
-  const handleOpen = useCallback((product: Product) => {
-    setProduct(product);
-    setModalOpen(true);
-  }, []);
-
-  const handleClose = useCallback(() => {
-    setProduct(undefined);
-    setModalOpen(false);
-  }, []);
+  const {
+    value: currentProduct, isModalOpen, handleClose, handleOpen, handleEdit,
+  } = useModalHelper(productsState);
 
   return (
     <>
       <CardList title="Produtos" recoilSelector={productsState}>
         {(product) => (
-          <CustomCard onClick={() => handleOpen(product)}>
+          <CustomCard onEdit={() => handleOpen(product)} onClick={() => handleOpen(product)}>
             <Typography variant="h6">{`${product.name}`}</Typography>
             <Typography>{formatMoney(product.price)}</Typography>
           </CustomCard>
@@ -34,9 +25,9 @@ const ProductColumn: FunctionComponent = () => {
       {currentProduct && (
       <ProductModal
         product={currentProduct}
-        setProduct={setProduct}
         open={isModalOpen}
         onClose={handleClose}
+        handleSubmit={handleEdit}
       />
       )}
     </>
