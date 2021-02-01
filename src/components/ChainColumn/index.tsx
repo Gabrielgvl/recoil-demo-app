@@ -1,15 +1,13 @@
-import React, { FunctionComponent, useCallback, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { FunctionComponent, memo } from 'react';
+import { useSetRecoilState } from 'recoil';
 import { Typography } from '@material-ui/core';
 import CardList from '../CardList';
-import { chainsState, currentChainId, currentChainState } from '../../recoil/chains';
+import { chainsState, currentChainState } from '../../recoil/chains';
 import CustomCard from '../CustomCard';
-import { Chain } from '../../types';
 import ChainModal from '../ChainModal';
 import useModalHelper from '../../hooks/useModalHelper';
 
 const ChainColumn: FunctionComponent = () => {
-  const chainId = useRecoilValue(currentChainId);
   const setChain = useSetRecoilState(currentChainState);
 
   const {
@@ -22,7 +20,7 @@ const ChainColumn: FunctionComponent = () => {
         {(chain) => (
           <CustomCard
             onEdit={() => handleOpen(chain)}
-            selected={chainId === chain.id}
+            selected={chain.selected}
             onClick={() => setChain(chain)}
           >
             <Typography variant="h6">{`${chain.name}`}</Typography>
@@ -42,4 +40,4 @@ const ChainColumn: FunctionComponent = () => {
   );
 };
 
-export default React.memo(ChainColumn);
+export default memo(ChainColumn);

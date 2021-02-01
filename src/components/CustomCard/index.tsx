@@ -1,7 +1,5 @@
-import {
-  Card, CardActions, CardContent, IconButton, Typography,
-} from '@material-ui/core';
-import React, { FunctionComponent, ReactNode } from 'react';
+import { CardContent } from '@material-ui/core';
+import { FunctionComponent, memo, ReactNode } from 'react';
 import { CustomCardWrapper, CustomCardWrapperProps } from './styles';
 import ContextMenu from '../ContextMenu';
 
@@ -26,4 +24,4 @@ const CustomCard: FunctionComponent<CustomCardProps> = ({
   </ContextMenu>
 );
 
-export default React.memo(CustomCard);
+export default memo(CustomCard);

@@ -1,14 +1,13 @@
-import React, { FunctionComponent } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { FunctionComponent, memo } from 'react';
+import { useSetRecoilState } from 'recoil';
 import { Typography } from '@material-ui/core';
 import CardList from '../CardList';
 import CustomCard from '../CustomCard';
-import { currentStoreId, currentStoreState, storesState } from '../../recoil/stores';
+import { currentStoreState, storesState } from '../../recoil/stores';
 import useModalHelper from '../../hooks/useModalHelper';
 import StoreModal from '../StoreModal';
 
 const StoreColumn: FunctionComponent = () => {
-  const storeId = useRecoilValue(currentStoreId);
   const setStore = useSetRecoilState(currentStoreState);
   const {
     value: editStore, isModalOpen, handleOpen, handleClose, handleEdit,
@@ -18,7 +17,7 @@ const StoreColumn: FunctionComponent = () => {
       <CardList title="Lojas" recoilSelector={storesState}>
         {(store) => (
           <CustomCard
-            selected={storeId === store.id}
+            selected={store.selected}
             onClick={() => setStore(store)}
             onEdit={() => handleOpen(store)}
           >
@@ -39,4 +38,4 @@ const StoreColumn: FunctionComponent = () => {
   );
 };
 
-export default React.memo(StoreColumn);
+export default memo(StoreColumn);

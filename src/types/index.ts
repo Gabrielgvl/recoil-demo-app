@@ -1,5 +1,6 @@
 export interface BaseEntity {
     id: number,
+    selected?: boolean,
 }
 
 export interface User extends BaseEntity {

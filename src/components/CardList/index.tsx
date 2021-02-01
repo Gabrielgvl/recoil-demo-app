@@ -2,13 +2,14 @@ import { Grid, Typography } from '@material-ui/core';
 import React, { ReactElement, ReactNode, Suspense } from 'react';
 import { RecoilValue, useRecoilValue } from 'recoil';
 import LoadingList from '../LoadingList';
+import { BaseEntity } from '../../types';
 
-interface ListContainerProps<T extends {id: number}> {
+interface ListContainerProps<T extends BaseEntity> {
     recoilSelector: RecoilValue<Array<T>>
     children: (item: T) => ReactNode,
 }
 
-function ListContainer<T extends {id: number}>({
+function ListContainer<T extends BaseEntity>({
   recoilSelector,
   children,
 }: ListContainerProps<T>): ReactElement {
@@ -24,11 +25,11 @@ function ListContainer<T extends {id: number}>({
   );
 }
 
-export interface CardColumnProps<T extends {id: number}> extends ListContainerProps<T>{
+export interface CardColumnProps<T extends BaseEntity> extends ListContainerProps<T>{
     title: string,
 }
 
-function CardList<T extends {id: number}>({
+function CardList<T extends BaseEntity>({
   title,
   recoilSelector,
   children,

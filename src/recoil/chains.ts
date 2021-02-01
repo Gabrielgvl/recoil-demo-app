@@ -1,21 +1,18 @@
 import {
-  atomFamily, selector, selectorFamily,
+  atomFamily, DefaultValue, selector,
 } from 'recoil';
 import { Chain } from '../types';
 import { getChainsByUser } from '../config/api';
 import { currentUserId, hasCurrentUser } from './users';
 
-const chainsQuery = selectorFamily<Array<Chain>, number>({
-  key: 'chainsQuery',
-  get: (userId) => async () => {
-    const { data } = await getChainsByUser(userId);
-    return data;
-  },
-});
+const chainsQuery = async (userId: number) => {
+  const { data } = await getChainsByUser(userId);
+  return data;
+};
 
 export const chainsAtom = atomFamily<Array<Chain>, number>({
   key: 'chainsAtom',
-  default: chainsQuery,
+  default: (userId) => chainsQuery(userId),
 });
 
 export const chainsState = selector<Array<Chain>>({
@@ -45,9 +42,17 @@ export const currentChainState = selector<Chain | null>({
 
     return get(currentChain(userId));
   },
-  set: ({ set, get }, newValue) => {
+  set: ({ reset, set, get }, newValue) => {
     const userId = get(currentUserId);
     if (!userId) return;
+
+    if (newValue instanceof DefaultValue) {
+      return reset(currentChain(userId));
+    }
+
+    if (newValue) {
+      set(chainsState, (chains) => chains.map((c) => ({ ...c, selected: c.id === newValue.id })));
+    }
 
     return set(currentChain(userId), newValue);
   },

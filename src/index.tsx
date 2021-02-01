@@ -6,14 +6,12 @@ import { ErrorBoundary } from 'react-error-boundary';
 import App from './App';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <ErrorBoundary fallback={<Typography align="center" variant="h3">Aconteceu um erro! Lembre-se de rodar yarn start:db antes!</Typography>}>
-        <StylesProvider injectFirst>
-          <App />
-        </StylesProvider>
-      </ErrorBoundary>
-    </RecoilRoot>
-  </React.StrictMode>,
+  <RecoilRoot>
+    <ErrorBoundary fallback={<Typography align="center" variant="h3">Aconteceu um erro! Lembre-se de rodar yarn start:db antes!</Typography>}>
+      <StylesProvider injectFirst>
+        <App />
+      </StylesProvider>
+    </ErrorBoundary>
+  </RecoilRoot>,
   document.getElementById('root'),
 );

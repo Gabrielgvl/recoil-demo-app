@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent, memo } from 'react';
 import { Typography } from '@material-ui/core';
 import CardList from '../CardList';
 import CustomCard from '../CustomCard';
@@ -34,4 +34,4 @@ const ProductColumn: FunctionComponent = () => {
   );
 };
 
-export default React.memo(ProductColumn);
+export default memo(ProductColumn);

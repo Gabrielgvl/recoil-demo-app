@@ -55,15 +55,3 @@ export const currentProductState = selector<Product | null>({
     return set(currentProduct(storeId), newValue);
   },
 });
-
-export const currentProductId = selector<number | null>({
-  key: 'currentProductId',
-  get: ({ get }) => {
-    const storeId = get(currentStoreId);
-    if (!storeId) throw new Error('Chain id is missing');
-
-    const product = get(currentProduct(storeId));
-    if (!product) return null;
-    return product.id;
-  },
-});
