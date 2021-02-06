@@ -39,8 +39,3 @@ export const currentUserId = selector<number | null>({
     return user.id;
   },
 });
-
-export const hasCurrentUser = selector<boolean>({
-  key: 'hasCurrentUser',
-  get: ({ get }) => !!get(currentUserState),
-});

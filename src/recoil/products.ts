@@ -41,7 +41,7 @@ export const currentProductState = selector<Product | null>({
   key: 'currentProductState',
   get: ({ get }) => {
     const storeId = get(currentStoreId);
-    if (!storeId) throw new Error('User id is missing');
+    if (!storeId) return null;
 
     const product = get(currentProduct(storeId));
     if (!product) return null;
@@ -50,7 +50,7 @@ export const currentProductState = selector<Product | null>({
   },
   set: ({ set, get }, newValue) => {
     const storeId = get(currentStoreId);
-    if (!storeId) throw new Error('Chain id is missing');
+    if (!storeId) return null;
 
     return set(currentProduct(storeId), newValue);
   },

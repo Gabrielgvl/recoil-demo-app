@@ -4,29 +4,35 @@ import { RecoilValue, useRecoilValue } from 'recoil';
 import LoadingList from '../LoadingList';
 import { BaseEntity } from '../../types';
 
-interface ListContainerProps<T extends BaseEntity> {
+interface CardColumnProps<T extends BaseEntity> {
     recoilSelector: RecoilValue<Array<T>>
     children: (item: T) => ReactNode,
+    title: string,
 }
 
 function ListContainer<T extends BaseEntity>({
   recoilSelector,
   children,
-}: ListContainerProps<T>): ReactElement {
+  title,
+}: CardColumnProps<T>): ReactElement | null {
   const list = useRecoilValue(recoilSelector);
+
+  if (list.length === 0) return null;
+
   return (
     <>
-      {list.map((item) => (
-        <Grid key={item.id} item xs={12}>
-          { children(item) }
-        </Grid>
-      ))}
+      <Grid xs={12} item>
+        <Typography align="center" variant="h5">{title}</Typography>
+      </Grid>
+      <Grid xs={12} container item spacing={3}>
+        {list.map((item) => (
+          <Grid key={item.id} item xs={12}>
+            { children(item) }
+          </Grid>
+        ))}
+      </Grid>
     </>
   );
-}
-
-export interface CardColumnProps<T extends BaseEntity> extends ListContainerProps<T>{
-    title: string,
 }
 
 function CardList<T extends BaseEntity>({
@@ -36,16 +42,11 @@ function CardList<T extends BaseEntity>({
 }: CardColumnProps<T>): ReactElement {
   return (
     <Grid justify="center" container spacing={2}>
-      <Grid xs={12} item>
-        <Typography align="center" variant="h5">{title}</Typography>
-      </Grid>
-      <Grid xs={12} container item spacing={3}>
-        <Suspense fallback={<LoadingList />}>
-          <ListContainer recoilSelector={recoilSelector}>
-            {(item) => children(item)}
-          </ListContainer>
-        </Suspense>
-      </Grid>
+      <Suspense fallback={<LoadingList />}>
+        <ListContainer recoilSelector={recoilSelector} title={title}>
+          {(item) => children(item)}
+        </ListContainer>
+      </Suspense>
     </Grid>
   );
 }

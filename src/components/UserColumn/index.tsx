@@ -17,7 +17,7 @@ const UserColumn: FunctionComponent = () => {
       <CardList title="Usuarios" recoilSelector={usersAtom}>
         {(user) => (
           <CustomCard
-            // selected={user.selected}
+            selected={user.selected}
             onClick={() => setUser(user)}
             onEdit={() => handleOpen(user)}
           >

@@ -1,13 +1,10 @@
 import {
-  ChangeEvent, FC, ReactElement, ReactNode, useRef, useState,
+  ChangeEvent, ReactElement, ReactNode, useState,
 } from 'react';
-import { useSetRecoilState } from 'recoil';
 import {
   Button,
-  Dialog, DialogActions, DialogContent, DialogTitle, TextField,
+  Dialog, DialogActions, DialogContent, DialogTitle,
 } from '@material-ui/core';
-import { productsState } from '../../recoil/products';
-import { Product } from '../../types';
 
 interface ChildrenProps<T> {
     values: T

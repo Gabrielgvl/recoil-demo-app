@@ -3,7 +3,7 @@ import {
 } from 'recoil';
 import { Store } from '../types';
 import { getStoresByChain } from '../config/api';
-import { currentChainId, hasCurrentChain } from './chains';
+import { currentChainId } from './chains';
 import { currentUserId } from './users';
 
 const storesQuery = selectorFamily<Array<Store>, number>({
@@ -47,10 +47,10 @@ export const currentStoreState = selector<Store | null>({
   key: 'currentStoreState',
   get: ({ get }) => {
     const chainId = get(currentChainId);
-    if (!chainId) throw new Error('Chain id is missing');
+    if (!chainId) return null;
 
     const userId = get(currentUserId);
-    if (!userId) throw new Error('User id is missing');
+    if (!userId) return null;
 
     return get(currentStore({ chainId, userId }));
   },
@@ -79,19 +79,10 @@ export const currentStoreId = selector<number | null>({
   key: 'currentStoreId',
   get: ({ get }) => {
     const chainId = get(currentChainId);
-    if (!chainId) throw new Error('Chain id is missing');
+    if (!chainId) return null;
 
     const chain = get(currentStoreState);
     if (!chain) return null;
     return chain.id;
-  },
-});
-
-export const hasCurrentStore = selector<boolean>({
-  key: 'hasCurrentStore',
-  get: ({ get }) => {
-    const hasChain = get(hasCurrentChain);
-    if (!hasChain) return false;
-    return !!get(currentStoreState);
   },
 });

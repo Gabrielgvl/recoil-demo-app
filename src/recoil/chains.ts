@@ -3,7 +3,7 @@ import {
 } from 'recoil';
 import { Chain } from '../types';
 import { getChainsByUser } from '../config/api';
-import { currentUserId, hasCurrentUser } from './users';
+import { currentUserId } from './users';
 
 const chainsQuery = async (userId: number) => {
   const { data } = await getChainsByUser(userId);
@@ -38,7 +38,7 @@ export const currentChainState = selector<Chain | null>({
   key: 'currentChainState',
   get: ({ get }) => {
     const userId = get(currentUserId);
-    if (!userId) throw new Error('User id is missing');
+    if (!userId) return null;
 
     return get(currentChain(userId));
   },
@@ -62,19 +62,11 @@ export const currentChainId = selector<number | null>({
   key: 'currentChainId',
   get: ({ get }) => {
     const userId = get(currentUserId);
-    if (!userId) throw new Error('User id is missing');
+    if (!userId) return null;
 
     const chain = get(currentChain(userId));
     if (!chain) return null;
-    return chain.id;
-  },
-});
 
-export const hasCurrentChain = selector<boolean>({
-  key: 'hasCurrentChain',
-  get: ({ get }) => {
-    const hasUser = get(hasCurrentUser);
-    if (!hasUser) return false;
-    return !!get(currentChainState);
+    return chain.id;
   },
 });
