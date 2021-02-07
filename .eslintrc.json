@@ -1,0 +1,65 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "jest": true
+    },
+    "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "airbnb",
+        "prettier/@typescript-eslint"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "react-hooks", "jsx-a11y", "import", "@typescript-eslint"
+    ],
+    "rules": {
+        "import/extensions": [
+            "off",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
+        "react/jsx-filename-extension": [
+            "error",
+            {
+                "extensions": [".js", ".jsx", ".tsx", ".ts"]
+            }
+        ],
+        "react/jsx-uses-react": "off",
+        "react/react-in-jsx-scope": "off",
+        "global-require": "off",
+        "no-plusplus": "off",
+        "import/prefer-default-export": "off",
+        "consistent-return": "off",
+        "no-useless-return": "off",
+        "import/no-unresolved": "off",
+        "react/forbid-prop-types": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": [
+            "warn", {
+                "additionalHooks": "useRecoilCallback"
+            }
+        ],
+        "no-unused-vars": "off",
+        "react/prop-types": "off",
+        "react/jsx-props-no-spreading": "off",
+        "no-use-before-define": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"],
+        "@typescript-eslint/no-use-before-define": ["error"],
+        "@typescript-eslint/no-unused-vars": ["warn", { "ignoreRestSiblings": true }]
+    }
+}
