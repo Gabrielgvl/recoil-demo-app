@@ -14,31 +14,38 @@ const storesQuery = selectorFamily<Array<Store>, number>({
   },
 });
 
-export const storesAtom = atomFamily<Array<Store>, number>({
+interface StoreStateProps {
+  chainId: number,
+  userId: number,
+}
+
+export const storesAtom = atomFamily<Array<Store>, Readonly<StoreStateProps>>({
   key: 'storesAtom',
-  default: storesQuery,
+  default: ({ chainId }) => storesQuery(chainId),
 });
 
 export const storesState = selector<Array<Store>>({
   key: 'storesState',
   get: ({ get }) => {
+    const userId = get(currentUserId);
+    if (!userId) return [];
+
     const chainId = get(currentChainId);
     if (!chainId) return [];
-    return get(storesAtom(chainId));
+    return get(storesAtom({ chainId, userId }));
   },
   set: ({ set, get }, newValue) => {
+    const userId = get(currentUserId);
+    if (!userId) throw new Error('User id is missing');
+
     const chainId = get(currentChainId);
     if (!chainId) throw new Error('Chain id is missing');
-    set(storesAtom(chainId), newValue);
+
+    set(storesAtom({ chainId, userId }), newValue);
   },
 });
 
-interface CurrentStoreProps {
-  chainId: number,
-  userId: number,
-}
-
-const currentStore = atomFamily<Store | null, Readonly<CurrentStoreProps>>({
+const currentStore = atomFamily<Store | null, Readonly<StoreStateProps>>({
   key: 'currentStore',
   default: null,
 });

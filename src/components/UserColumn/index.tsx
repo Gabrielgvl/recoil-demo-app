@@ -14,7 +14,7 @@ const UserColumn: FunctionComponent = () => {
   } = useModalHelper(usersAtom);
   return (
     <>
-      <CardList title="Usuarios" recoilSelector={usersAtom}>
+      <CardList title="Usuários" recoilSelector={usersAtom}>
         {(user) => (
           <CustomCard
             selected={user.selected}

@@ -34,7 +34,7 @@ export const currentUserState = selector<User | null>({
 export const currentUserId = selector<number | null>({
   key: 'currentUserId',
   get: ({ get }) => {
-    const user = get(currentUser);
+    const user = get(currentUserState);
     if (!user) return null;
     return user.id;
   },

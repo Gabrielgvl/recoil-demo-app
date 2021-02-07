@@ -29,7 +29,7 @@ export const chainsState = selector<Array<Chain>>({
   },
 });
 
-export const currentChain = atomFamily<Chain | null, number>({
+const currentChain = atomFamily<Chain | null, number>({
   key: 'currentChain',
   default: null,
 });
@@ -44,7 +44,7 @@ export const currentChainState = selector<Chain | null>({
   },
   set: ({ reset, set, get }, newValue) => {
     const userId = get(currentUserId);
-    if (!userId) return;
+    if (!userId) throw new Error('User id is missing');
 
     if (newValue instanceof DefaultValue) {
       return reset(currentChain(userId));
