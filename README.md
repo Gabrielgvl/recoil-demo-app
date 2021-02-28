@@ -28,6 +28,7 @@ Antes de entrarmos em detalhes de código, vamos ver alguns conceitos básicos d
 
 - [**Atoms**](https://recoiljs.org/docs/api-reference/core/atom)  Similar ao estado do React, um atom tem a capacidade de armazenar qualquer tipo válido de dado (objetos, strings, arrays, numbers etc.). Para acessar o valor do atom em qualquer lugar da aplicação, basta usar o Hook [**useRecoilState**](https://recoiljs.org/docs/api-reference/core/useRecoilState), bem parecido com o useState() do React.
 - [**Selectors**](https://recoiljs.org/docs/api-reference/core/selector)  Um selector seleciona um estado existente da aplicação, pode ser de um atom ou de outro selector e pode ser usado para realizar alguma modificação ao estado antes de ser acessado. O selector funciona com um “memoizer”, por exemplo, ele deixa o valor em cache correspondendo ao input, então se você fizer duas requisições à um selector sem alterar o input dele, ele retornará o valor em cache, ao invés de realizar a função novamente.
+- [**RecoilRoot**](https://recoiljs.org/docs/api-reference/core/RecoilRoot) - Bem similar ao Provider do Context API, o RecoilRoot precisa ser o pai de todo componente que utilizar os hooks do Recoil.
 
 
 
@@ -639,11 +640,43 @@ const ProductColumn: FunctionComponent = () => (
 
 
 
-Juntando todas as colunas, temos nossa aplicação final:
+Juntando todas as colunas, temos nossa aplicação quase final:
 
 
 
 ![products](media/products.gif)
+
+
+
+Agora para a cereja do bolo, mostrarei como fazer a edição do estado:
+
+```react
+function useModalHelper<T extends BaseEntity>(selector: RecoilState<Array<T>>)
+    :UseModalHelperReturn<T> {
+
+  const updateList = useSetRecoilState(selector);
+
+  const handleEdit = useCallback((values: T) => {
+    updateList((items) => {
+      const index = items.findIndex((p) => p.id === values.id);
+      return [...items.slice(0, index), values, ...items.slice(index + 1)];
+    });
+  }, [updateList]);
+
+  return {
+    handleEdit,
+  };
+}
+```
+
+
+
+Foi implementado um hook customizado genérico para auxiliar na edição de qualquer selector bi-direcional ou atom. Demonstrando na prática, ficou algo assim:
+
+![Edit](media/Edit.gif)
+
+Perceba como aquela simples implementação, foi capaz de refletir para todos os usuários que possuem acesso à loja. Tudo graças ao estado compartilhado dos produtos entre as lojas.
+
 
 
 
